@@ -1,4 +1,4 @@
-# 🖥 커맨드 라인 인터페이스(CLI)
+# 🖥 CLI
 
 ## 명령어
 
@@ -28,7 +28,7 @@ parcel watch index.html
 
 ### Help
 
-가능한 모든 CLI 옵션을 출력합니다.
+사용 가능한 모든 CLI 옵션을 출력합니다.
 
 ```bash
 parcel help
@@ -65,7 +65,7 @@ root
 
 ### 서빙될 public URL 설정
 
-기본값: [--out-dir 옵션과 같음](#output-directory)
+기본값: "/"
 
 같이 사용 가능한 명령어: `serve`, `watch`, `build`
 
@@ -76,9 +76,9 @@ parcel entry.js --public-url ./dist/
 결과물은 다음과 같이 나옵니다.
 
 ```html
-<link rel="stylesheet" type="text/css" href="/dist/entry.1a2b3c.css">
+<link rel="stylesheet" type="text/css" href="dist/entry.1a2b3c.css" />
 <!-- or -->
-<script src="/dist/entry.e5f6g7.js"></script>
+<script src="dist/entry.e5f6g7.js"></script>
 ```
 
 ### 타겟
@@ -91,7 +91,21 @@ parcel entry.js --public-url ./dist/
 parcel build entry.js --target node
 ```
 
+⚠️ 타겟이 `node`나 `electron`일 경우 package.json의 `dependencies`를 번들로 만들지 않습니다.(`devDependencies`는 포함됩니다). [--bundle-node-modules](#force-node-modules-bundling) 플래그를 사용하여 이 동작을 무시할 수 있습니다. (아래 참조)
+
 가능한 타겟: `node`, `browser` and `electron`
+
+### 강제로 노드 모듈 번들링하기
+
+기본값: false
+
+같이 사용 가능한 명령어: `serve`, `watch`, `build`
+
+```bash
+parcel build entry.js --target node --bundle-node-modules
+```
+
+`target` 플래그가 `node` 혹은 `electron`이어도 package.json의 `dependencies`를 포함합니다.
 
 ### 캐시 디렉토리
 
@@ -123,12 +137,14 @@ parcel serve entry.js --port 1111
 parcel entry.js --log-level 1
 ```
 
-| 로그 레벨 | 효과               |
-| --------- | ------------------ |
-| 0         | 로깅 비활성화      |
-| 1         | 에러만 로그        |
-| 2         | 에러와 경고를 로그 |
-| 3         | 모두 로깅          |
+| 로그 레벨 | 효과          |
+| --------- | ------------- |
+| 0         | 로깅 비활성화 |
+| 1         | 에러          |
+| 2         | 경고          |
+| 3         | 정보          |
+| 4         | 자세하게      |
+| 5         | 디버그        |
 
 ### 빠른 모듈 교체 호스트네임
 
