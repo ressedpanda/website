@@ -34,9 +34,9 @@ Parcel 은 어떤 유형의 파일이라도 진입점으로 취할 수 있지만
 
 ```html
 <html>
-<body>
-  <script src="./index.js"></script>
-</body>
+  <body>
+    <script src="./index.js"></script>
+  </body>
 </html>
 ```
 
@@ -58,4 +58,74 @@ parcel index.html
 parcel watch index.html
 ```
 
+### 여러개의 파일 사용
+
+한 개 이상의 파일을 번들링 해야 할 때 두 가지 방법을 사용할 수 있습니다. `index.html`과 `about.html`로 사용해 봅시다.
+
+파일이름 지정:
+
+```bash
+parcel index.html about.html
+```
+
+glob패턴 사용하기:
+
+```bash
+parcel *.html
+```
+
+_참고:_ 파일 구조가 이렇게 되어있는 경우:
+
+```
+- folder-1
+-- index.html
+- folder-2
+-- index.html
+```
+
+http://localhost:1234/folder-1/ 는 작동하지 않습니다. http://localhost:1234/folder-1/index.html 처럼 명시적으로 작성해주어야 합니다.
+
+### 프로덕션 빌드하기
+
 프로덕션을 위한 빌드를 할 준비가 되었다면, `build` 모드로 감시 기능을 끄고 한 번만 빌드 합니다. [프로덕션](production.html) 섹션에서 보다 자세한 사항들을 확인해 보세요.
+
+### 프로젝트에 Parcel 추가하기
+
+CI를 사용하여 프로젝트를 프로그래밍 방식으로 빌드하려는 경우 등 Parcel을 전역적으로 설치할 수 없는 경우가 생길 수 있습니다. 이 경우 Parcel을 로컬 패키지로 설치하여 실행할 수 있습니다.
+
+Yarn:
+
+```bash
+yarn add parcel-bundler --dev
+```
+
+NPM:
+
+```bash
+npm install parcel-bundler --save-dev
+```
+
+설치 후 `package.json`에 하단의 작업 스크립트를 추가하세요.
+
+```json
+{
+  "scripts": {
+    "dev": "parcel <your entry file>",
+    "build": "parcel build <your entry file>"
+  }
+}
+```
+
+스크립트를 추가한 후 실행할 수 있습니다:
+
+```bash
+# 개발 모드 실행
+yarn dev
+# 또는
+npm run dev
+
+# 운영 모드 빌드
+yarn build
+# 또는
+npm run build
+```
