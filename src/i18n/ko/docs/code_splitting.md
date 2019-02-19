@@ -4,21 +4,25 @@ Parcel 은 일체의 설정 없이(zero configuration) 코드 분할(splitting)�
 
 코드 분할은 다이나믹 `import()` 함수 [구문 제안](https://github.com/tc39/proposal-dynamic-import)으로 제어합니다. 이 함수는 보통의 `import`나 `require`함수처럼 움직이지만 프로미스(Promise)를 반환합니다. 이것은 모듈이 비동기적으로 로드됨을 의미합니다.
 
+## 다이나믹 임포트
+
 아래 예제는 다이나믹 임포트로 애플리케이션 요구에 따라 어떻게 서브페이지를 로드하는지 보여줍니다.
 
 ```javascript
 import('./pages/about').then(function(page) {
   // 페이지 렌더
-  page.default()
+  page.render()
 })
 ```
+
+### async/await 사용
 
 `import()`가 프로미스를 반환하기 때문에 async/await 구문을 사용할 수 있습니다. 더 많은 브라우저가 이를 지원하기 전 까지는 Babel 을 구성하여 구문을 변환할 필요가 있을 겁니다.
 
 ```javascript
 const page = await import('./pages/about')
 // 페이지 렌더
-page.default()
+page.render()
 ```
 
 다이나믹 임포트는 Pacel 에서 지연 로드 됩니다. 따라서 모든 `import()` 호출을 파일 최상위에 놓고 하위 번들이 사용되기 전까지 로드되지 않게 할 수 있습니다. 아래 예제는 애플리케이션 서브페이지가 동적으로 지연 로드되는 방식을 보여줍니다.
@@ -34,7 +38,7 @@ const pages = {
 async function renderPage(name) {
   // 요청 페이지 로드 지연
   const page = await pages[name]
-  return page.default()
+  return page.render()
 }
 ```
 
@@ -50,3 +54,11 @@ import './app'
 ```
 
 [babel-polyfill](http://babeljs.io/docs/usage/polyfill)와 [babel-runtime](http://babeljs.io/docs/plugins/transform-runtime)를 읽어보세요.
+
+## Bundle resolution
+
+Parcel infers the location of bundles automatically. This is done in the bundle-url module, and uses the stack trace to determine the path where the initial bundle was loaded.
+
+This means you don't need to configure where bundles should be loaded from, but also means you must serve the bundles from the same location.
+
+Parcel currently resolves bundles at the following protocols: http, https, file, ftp, chrome-extension and moz-extension.
