@@ -37,7 +37,6 @@ yarn add --dev parcel-bundler
 npm install --save preact
 npm install --save preact-compat
 npm install --save-dev parcel-bundler
-npm install --save-dev babel-preset-env
 npm install --save-dev babel-preset-preact
 ```
 
@@ -47,7 +46,6 @@ npm install --save-dev babel-preset-preact
 yarn add preact
 yarn add preact-compat
 yarn add --dev parcel-bundler
-yarn add --dev babel-preset-env
 yarn add --dev babel-preset-preact
 ```
 
@@ -56,7 +54,7 @@ yarn add --dev babel-preset-preact
 ```javascript
 // .babelrc
 {
-  "presets": ["env", "preact"]
+  "presets": ["preact"]
 }
 ```
 
@@ -93,3 +91,59 @@ yarn add --dev parcel-bundler
   "start": "parcel index.html"
 }
 ```
+
+## Typescript
+
+Typescript를 사용하기 위하여 의존성을 설치합니다.
+
+```bash
+npm install --save-dev typescript
+npm install --save-dev parcel-bundler
+```
+
+<sub>Yarn 패키지 매니저를 사용하신다면 다음의 명령어로 설치할 수 있습니다.</sub>
+
+```bash
+yarn add typescript --dev
+yarn add --dev parcel-bundler
+```
+
+### index.html 컴파일
+
+`package.json`에 스크립트를 추가합니다.
+
+```javascript
+// package.json
+"scripts": {
+  "start": "parcel index.html"
+}
+```
+
+그리고 `index.html`에 `.ts` 파일을 추가해주세요.
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+  <body>
+    <!-- Here 👇 -->
+    <script src="./myTypescriptFile.ts"></script>
+  </body>
+</html>
+```
+
+이게 끝입니다!
+
+### 직접 컴파일하기
+
+`package.json`에 스크립트를 추가해주세요.
+
+```javascript
+// package.json
+"scripts": {
+  "start": "parcel myTypescriptFile.ts"
+}
+```
+
+이걸로 끝입니다! 😄 컴파일 된 `.js` 파일은 dist 폴더에서 찾을 수 있습니다.
